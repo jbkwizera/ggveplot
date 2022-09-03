@@ -3,7 +3,8 @@
 .Rdata
 .httr-oauth
 .DS_Store
-^ggveplot\.Rproj$
-^\.Rproj\.user$
-^LICENSE\.md$
-^README\.Rmd$
+ggveplot.Rproj
+.Rproj.user
+LICENSE.md
+README.Rmd
+.github
