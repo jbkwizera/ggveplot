@@ -2,6 +2,8 @@
 #'
 #' @param data Data set with column named `target`
 #' @param target The column to put on the bar chart
+#' @param wt The weights for tallying
+#' @param percent Plot the percentages
 #' @param title Title of the bar chart
 #' @param xlab x-axis label
 #' @param ylab y-axis label
@@ -14,10 +16,16 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_vbar(df, "x")
-geom_vbar <- function(data, target, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
-  data <- data %>%
-    order_factors_by_count(target) %>%
-    dplyr::count(.data[[target]])
+geom_vbar <- function(data, target, wt = 1, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+  data$wt <- wt
+  data <- order_factors_by_count(data, target, wt = "wt") %>%
+    dplyr::count(.data[[target]], wt = .data$wt)
+
+  if (percent) {
+    data <- data %>%
+      dplyr::mutate(n = 100*n/sum(n))
+  }
+  data$n <- round(data$n)
 
   (data %>%
       ggplot2::ggplot(ggplot2::aes(.data[[target]], n)) +

@@ -4,12 +4,25 @@
 \alias{geom_vbar}
 \title{Draw a vertical bar chart}
 \usage{
-geom_vbar(data, target, title = NULL, xlab = NULL, ylab = NULL, caption = NULL)
+geom_vbar(
+  data,
+  target,
+  wt = 1,
+  percent = FALSE,
+  title = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  caption = NULL
+)
 }
 \arguments{
 \item{data}{Data set with column named \code{target}}
 
 \item{target}{The column to put on the bar chart}
+
+\item{wt}{The weights for tallying}
+
+\item{percent}{Plot the percentages}
 
 \item{title}{Title of the bar chart}
 

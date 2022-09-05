@@ -2,6 +2,7 @@
 #'
 #' @param data A data frame with column named `target`
 #' @param target A column to "factorize" and order by frequency of factors
+#' @param wt Name of column with weights to calculate frequencies
 #'
 #' @return The data frame with `target` "factorized" and ordered
 #' @export
@@ -11,14 +12,18 @@
 #' order_factors_by_count(df, "x")
 #'
 #' @include utils-pipe.R
-order_factors_by_count <- function(data, target) {
+order_factors_by_count <- function(data, target, wt = NA) {
+  if (is.na(wt)) {
+    data[["wt"]] <- 1
+    wt <- "wt"
+  }
+
   if (is.factor(data[[target]]) & is.ordered(data[[target]])) {
     return (data)
   }
 
   data_ <- data %>%
-    dplyr::group_by(.data[[target]]) %>%
-    dplyr::summarize(n = dplyr::n()) %>%
+    dplyr::count(.data[[target]], wt = .data[[wt]]) %>%
     dplyr::arrange(-n)
 
   (data %>%

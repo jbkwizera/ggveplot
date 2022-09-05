@@ -4,12 +4,14 @@
 \alias{order_factors_by_count}
 \title{Order a Data Frame by Column Frequency Count}
 \usage{
-order_factors_by_count(data, target)
+order_factors_by_count(data, target, wt = NA)
 }
 \arguments{
 \item{data}{A data frame with column named \code{target}}
 
 \item{target}{A column to "factorize" and order by frequency of factors}
+
+\item{wt}{Name of column with weights to calculate frequencies}
 }
 \value{
 The data frame with \code{target} "factorized" and ordered
