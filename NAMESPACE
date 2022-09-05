@@ -3,4 +3,5 @@
 export("%>%")
 export(geom_hbar)
 export(geom_vbar)
+export(order_factors_by_count)
 importFrom(magrittr,"%>%")
