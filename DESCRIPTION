@@ -16,4 +16,5 @@ Imports:
 Collate: 
     'assets.R'
     'utils-pipe.R'
+    'geom_hbar.R'
     'geom_vbar.R'
