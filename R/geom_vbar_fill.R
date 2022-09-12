@@ -18,8 +18,11 @@
 #' geom_vbar_fill(mpg, "class", "drv")
 #' @include utils-pipe.R assets.R utils-data.R
 geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
-  data <- data %>%
-    dplyr::mutate(wt = ifelse(is.null(wt), 1, .data[[wt]]))
+  if (is.null(wt)) {
+    data$wt <- 1
+  } else {
+    data$wt <- data[[wt]]
+  }
 
   data <- data %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%

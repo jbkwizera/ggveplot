@@ -4,7 +4,7 @@
 \alias{order_factors_by_count}
 \title{Order a Data Frame by Column Frequency Count}
 \usage{
-order_factors_by_count(data, target, wt = NA)
+order_factors_by_count(data, target, wt = NULL)
 }
 \arguments{
 \item{data}{A data frame with column named \code{target}}

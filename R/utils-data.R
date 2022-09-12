@@ -12,8 +12,8 @@
 #' order_factors_by_count(df, "x")
 #'
 #' @include utils-pipe.R
-order_factors_by_count <- function(data, target, wt = NA) {
-  if (is.na(wt)) {
+order_factors_by_count <- function(data, target, wt = NULL) {
+  if (is.null(wt)) {
     data[["wt"]] <- 1
     wt <- "wt"
   }
