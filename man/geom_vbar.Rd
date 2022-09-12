@@ -7,7 +7,7 @@
 geom_vbar(
   data,
   target,
-  wt = 1,
+  wt = NULL,
   percent = FALSE,
   title = NULL,
   xlab = NULL,

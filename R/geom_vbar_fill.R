@@ -3,6 +3,8 @@
 #' @param data A data frame with variables `var_main` and `var_fill`
 #' @param var_main The main variable to go on the x-axis
 #' @param var_fill The fill variable to go on the y-axis in the bars
+#' @param wt The weights for tallying
+#' @param percent Plot the percentages
 #' @param title The title of the chart
 #' @param xlab The label of the x-axis
 #' @param ylab The label of the y-axis
@@ -15,7 +17,10 @@
 #' library(ggplot2)
 #' geom_vbar_fill(mpg, "class", "drv")
 #' @include utils-pipe.R assets.R utils-data.R
-geom_vbar_fill <- function(data, var_main, var_fill, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+  data <- data %>%
+    dplyr::mutate(wt = ifelse(is.null(wt), 1, .data[[wt]]))
+
   data <- data %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%
     dplyr::summarize(n = dplyr::n(), .groups = "drop_last") %>%

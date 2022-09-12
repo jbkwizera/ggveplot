@@ -7,7 +7,7 @@
 geom_hbar(
   data,
   target,
-  wt = 1,
+  wt = NULL,
   percent = FALSE,
   title = NULL,
   xlab = NULL,

@@ -8,6 +8,8 @@ geom_vbar_fill(
   data,
   var_main,
   var_fill,
+  wt = NULL,
+  percent = FALSE,
   title = NULL,
   xlab = NULL,
   ylab = NULL,
@@ -20,6 +22,10 @@ geom_vbar_fill(
 \item{var_main}{The main variable to go on the x-axis}
 
 \item{var_fill}{The fill variable to go on the y-axis in the bars}
+
+\item{wt}{The weights for tallying}
+
+\item{percent}{Plot the percentages}
 
 \item{title}{The title of the chart}
 

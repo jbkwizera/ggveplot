@@ -16,8 +16,10 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_vbar(df, "x")
-geom_vbar <- function(data, target, wt = 1, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
-  data$wt <- wt
+geom_vbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+  data <- data %>%
+    dplyr::mutate(wt = ifelse(is.null(wt), 1, .data[[wt]]))
+
   data <- order_factors_by_count(data, target, wt = "wt") %>%
     dplyr::count(.data[[target]], wt = .data$wt)
 

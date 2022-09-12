@@ -16,8 +16,10 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
-geom_hbar <- function(data, target, wt = 1, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
-  data$wt <- wt
+geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+  data <- data %>%
+    dplyr::mutate(wt = ifelse(is.null(wt), 1, .data[[wt]]))
+
   data <- order_factors_by_count(data, target, wt = "wt") %>%
     dplyr::count(.data[[target]], wt = .data$wt)
 
