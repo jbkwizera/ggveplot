@@ -32,7 +32,7 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xl
   (data %>%
      ggplot2::ggplot(ggplot2::aes(.data[[target]], n)) +
      ggplot2::geom_bar(stat = "identity", fill = BLUE, width = 0.667) +
-     ggplot2::geom_text(ggplot2::aes(label = n), hjust = -0.5, size = 3) +
+     ggplot2::geom_text(ggplot2::aes(label = ifelse(percent, paste0(n, "%"), n)), hjust = -0.5, size = 3) +
      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
      ggplot2::annotate(
        "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))),
