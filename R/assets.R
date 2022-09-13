@@ -16,8 +16,8 @@ COLOR_SET <- list(
   SEVEN = c(BLUE, LIGHTBLUE, GREEN, "#00CC99", DARKGREEN, "#5C799D", DARKBLUE),
   EIGHT = c(BLUE, "#0099FF", LIGHTBLUE, GREEN, "#00CC99", DARKGREEN, "#5C799D", DARKBLUE))
 
-MPALETTE  <- c("#04477d", "#1b6595", "#3883ab", "#59a2bf", "#7cc1d3", "#a3e0e8",
-               "#a1f0fc", "#74e0fd", "#3fceff", "#00bbff", "#00a6ff", "#008eff")
+MPALETTE  <- c("#0000FF", "#0099FF", "#097ABC", "#8CCC98", "#00FF00",
+               "#008080", "#00CC99", "#49711E", "#5C799D", "#1B2F55")
 
 choose_shades <- function(pal = MPALETTE, n = Inf) {
   return (pal[seq(1, length(pal), length.out = min(n, length(pal)))])
