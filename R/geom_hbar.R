@@ -33,7 +33,7 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xl
   data$n <- round(data$n)
 
   (data %>%
-     ggplot2::ggplot(ggplot2::aes(.data[[target]], n)) +
+     ggplot2::ggplot(ggplot2::aes(reorder(.data[[target]], n, rev), n)) +
      ggplot2::geom_bar(stat = "identity", fill = BLUE, width = 0.667) +
      ggplot2::geom_text(ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
                         hjust = -0.5, size = 3) +
