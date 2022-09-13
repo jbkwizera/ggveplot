@@ -9,8 +9,9 @@ DARKGREEN <- c("#49711E")
 COLOR_SET <- list(
   ONE = c(BLUE),
   TWO = c(BLUE, LIGHTBLUE),
-  THREE = c(DARKBLUE, LIGHTBLUE, BLUE),
-  FOUR = c(DARKBLUE, LIGHTBLUE, GREEN, BLUE))
+  THREE = c(BLUE, LIGHTBLUE, DARKBLUE),
+  FOUR = c(BLUE, GREEN, LIGHTBLUE, DARKBLUE),
+  FIVE = c(BLUE, LIGHTBLUE, GREEN, DARKGREEN, DARKBLUE))
 
 MPALETTE  <- c("#04477d", "#1b6595", "#3883ab", "#59a2bf", "#7cc1d3", "#a3e0e8",
                "#a1f0fc", "#74e0fd", "#3fceff", "#00bbff", "#00a6ff", "#008eff")
