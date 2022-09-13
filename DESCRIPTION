@@ -21,4 +21,5 @@ Collate:
     'geom_hbar.R'
     'geom_hbar_fill.R'
     'geom_vbar.R'
+    'geom_vbar_dodge.R'
     'geom_vbar_fill.R'
