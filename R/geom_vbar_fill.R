@@ -24,7 +24,7 @@ geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
     data$wt <- data[[wt]]
   }
 
-  data <- data %>%
+  data <- order_factors_by_count(data, var_main, wt = "wt") %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%
     dplyr::summarize(n = dplyr::n(), .groups = "drop_last") %>%
     dplyr::mutate(percent = round(100*n/sum(n)))
@@ -35,6 +35,9 @@ geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
       ggplot2::geom_text(
         aes(label = paste0(round(percent), "%")),
         position = ggplot2::position_fill(vjust = 0.5), size = 3, color = "white") +
+      ggplot2::annotate("text", x = (dplyr::count(data, wt = n))[[var_main]],
+               y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
+               label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
       ggplot2::scale_fill_manual(
         values = COLOR_SET[[length(unique(data[[var_fill]]))]], aesthetics = c("color", "fill")) +
       ggplot2::scale_y_continuous(
