@@ -26,7 +26,7 @@ geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
 
   data <- order_factors_by_count(data, var_main, wt = "wt") %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%
-    dplyr::summarize(n = dplyr::n(), .groups = "drop_last") %>%
+    dplyr::summarize(n = sum(.data$wt), .groups = "drop_last") %>%
     dplyr::mutate(percent = round(100*n/sum(n)))
 
   (data %>%
