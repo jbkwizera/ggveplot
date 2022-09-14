@@ -10,6 +10,7 @@ geom_hbar(
   wt = NULL,
   percent = FALSE,
   title = NULL,
+  labels_in = TRUE,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -25,6 +26,8 @@ geom_hbar(
 \item{percent}{Plot the percentages}
 
 \item{title}{Title of the bar chart}
+
+\item{labels_in}{Put labels inside or outside the bars}
 
 \item{xlab}{x-axis label}
 

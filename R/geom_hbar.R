@@ -5,6 +5,7 @@
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
 #' @param title Title of the bar chart
+#' @param labels_in Put labels inside or outside the bars
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param caption Caption to go below the x-axis
@@ -16,7 +17,7 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
-geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -32,21 +33,28 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xl
   }
   data$n <- round(data$n)
 
-  (data %>%
-     ggplot2::ggplot(ggplot2::aes(reorder(.data[[target]], n, rev), n)) +
-     ggplot2::geom_bar(stat = "identity", fill = BLUE, width = 0.667) +
-     ggplot2::geom_text(ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
-                        hjust = -0.5, size = 3) +
-     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
-     ggplot2::annotate(
-       "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))),
-       label = data[[target]], size = 3, hjust = "left", color = "white") +
-     ggplot2::coord_flip() +
-     ggplot2::ggtitle(title) +
-     ggplot2::xlab(xlab) +
-     ggplot2::ylab(ylab) +
-     ggplot2::labs(caption = caption) +
-     base_vetheme +
-     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5),
-                    axis.text.y = ggplot2::element_blank()))
+  labels_annotation <- ggplot2::annotate(
+    "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))), label = data[[target]],
+    size = 3, hjust = "left", color = "white")
+
+  gg_layer <- data %>%
+    ggplot2::ggplot(ggplot2::aes(reorder(.data[[target]], n, rev), n)) +
+    ggplot2::geom_bar(stat = "identity", fill = BLUE, width = 0.6) +
+    ggplot2::geom_text(
+      ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
+      hjust = -0.125, size = 3) +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
+    ggplot2::coord_flip() +
+    ggplot2::ggtitle(title) +
+    ggplot2::xlab(xlab) +
+    ggplot2::ylab(ylab) +
+    ggplot2::labs(caption = caption) +
+    base_vetheme +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+
+  if (!labels_in) {
+    return (gg_layer)
+  } else {
+    return (gg_layer + labels_annotation + ggplot2::theme(axis.text.y = ggplot2::element_blank()))
+  }
 }
