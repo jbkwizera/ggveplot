@@ -16,7 +16,7 @@
 #' @examples
 #' library(ggplot2)
 #' geom_vbar_fill(mpg, "class", "drv")
-#' @include utils-pipe.R assets.R utils-data.R
+#' @include utils-pipe.R utils-gg.R utils-data.R
 geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
@@ -39,7 +39,7 @@ geom_vbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
                y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
                label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
       ggplot2::scale_fill_manual(
-        values = choose_shades(MPALETTE, length(unique(data[[var_fill]]))),
+        values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
       ggplot2::scale_y_continuous(
         labels = scales::percent, expand = ggplot2::expansion(mult = c(0, 0.1))) +

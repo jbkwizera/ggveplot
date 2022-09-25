@@ -13,11 +13,12 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
-    scales
+    scales,
+    stats
 Collate: 
-    'assets.R'
     'utils-pipe.R'
     'utils-data.R'
+    'utils-gg.R'
     'geom_hbar.R'
     'geom_hbar_fill.R'
     'geom_vbar.R'

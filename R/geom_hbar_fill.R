@@ -16,7 +16,7 @@
 #' @examples
 #' library(ggplot2)
 #' geom_hbar_fill(mpg, "class", "drv")
-#' @include utils-pipe.R assets.R utils-data.R
+#' @include utils-pipe.R utils-gg.R utils-data.R
 geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
@@ -31,7 +31,7 @@ geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
 
   (data %>%
       ggplot2::ggplot(
-        ggplot2::aes(reorder(.data[[var_main]], n, function(x) rev(sum(x))),
+        ggplot2::aes(stats::reorder(.data[[var_main]], n, function(x) rev(sum(x))),
             percent, fill = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "fill", width = 0.6) +
       ggplot2::geom_text(
@@ -41,7 +41,7 @@ geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
       #                   y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
       #                   label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
       ggplot2::scale_fill_manual(
-        values = COLOR_SET[[length(unique(data[[var_fill]]))]],
+        values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
       ggplot2::scale_y_continuous(
         labels = scales::percent, expand = ggplot2::expansion(mult = c(0, 0.1))) +

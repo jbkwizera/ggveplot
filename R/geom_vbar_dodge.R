@@ -15,7 +15,7 @@
 #' @examples
 #' library(ggplot2)
 #' geom_vbar_dodge(mpg, "class", "drv")
-#' @include utils-pipe.R assets.R utils-data.R
+#' @include utils-pipe.R utils-gg.R utils-data.R
 geom_vbar_dodge <- function(data, var_main, var_fill, wt = NULL, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
@@ -36,7 +36,7 @@ geom_vbar_dodge <- function(data, var_main, var_fill, wt = NULL, title = NULL, x
         ggplot2::aes(label = paste0(round(percent), "%")),
         position = ggplot2::position_dodge(0.9), vjust = -0.5, size = 3) +
       ggplot2::scale_fill_manual(
-        values = COLOR_SET[[length(unique(data[[var_fill]]))]],
+        values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
       ggplot2::ggtitle(title) +

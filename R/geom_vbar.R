@@ -12,7 +12,7 @@
 #'
 #' @return The bar chart object
 #' @export
-#' @include utils-pipe.R assets.R utils-data.R
+#' @include utils-pipe.R utils-gg.R utils-data.R
 #'
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
@@ -35,7 +35,7 @@ geom_vbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, de
 
   (data %>%
       ggplot2::ggplot(ggplot2::aes(.data[[target]], n)) +
-      ggplot2::geom_bar(stat = "identity", fill = BLUE, width = 0.6) +
+      ggplot2::geom_bar(stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
       ggplot2::geom_text(ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
                          size = 3, vjust = -0.5) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
