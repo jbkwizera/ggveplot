@@ -10,6 +10,7 @@ geom_hbar(
   wt = NULL,
   percent = FALSE,
   title = NULL,
+  dec_places = 2,
   labels_in = TRUE,
   xlab = NULL,
   ylab = NULL,
@@ -26,6 +27,8 @@ geom_hbar(
 \item{percent}{Plot the percentages}
 
 \item{title}{Title of the bar chart}
+
+\item{dec_places}{Rounding decimal places}
 
 \item{labels_in}{Put labels inside or outside the bars}
 

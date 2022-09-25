@@ -10,6 +10,7 @@ geom_vbar(
   wt = NULL,
   percent = FALSE,
   title = NULL,
+  dec_places = 2,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -25,6 +26,8 @@ geom_vbar(
 \item{percent}{Plot the percentages}
 
 \item{title}{Title of the bar chart}
+
+\item{dec_places}{Rounding decimal places}
 
 \item{xlab}{x-axis label}
 

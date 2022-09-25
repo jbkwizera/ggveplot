@@ -5,6 +5,7 @@
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
 #' @param title Title of the bar chart
+#' @param dec_places Rounding decimal places
 #' @param labels_in Put labels inside or outside the bars
 #' @param xlab x-axis label
 #' @param ylab y-axis label
@@ -17,7 +18,7 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
-geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2, labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -31,7 +32,7 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, la
     data <- data %>%
       dplyr::mutate(n = 100*n/sum(n))
   }
-  data$n <- round(data$n)
+  data$n <- round(data$n, dec_places)
 
   labels_annotation <- ggplot2::annotate(
     "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))), label = data[[target]],

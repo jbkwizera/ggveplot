@@ -31,15 +31,15 @@ geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
 
   (data %>%
       ggplot2::ggplot(
-        aes(reorder(.data[[var_main]], n, function(x) rev(sum(x))),
+        ggplot2::aes(reorder(.data[[var_main]], n, function(x) rev(sum(x))),
             percent, fill = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "fill", width = 0.6) +
       ggplot2::geom_text(
-        aes(label = paste0(round(percent), "%")),
+        ggplot2::aes(label = paste0(round(percent), "%")),
         position = ggplot2::position_fill(vjust = 0.5), size = 3, color = "white") +
-      ggplot2::annotate("text", x = (dplyr::count(data, wt = n))[[var_main]],
-                        y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
-                        label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
+      # ggplot2::annotate("text", x = (dplyr::count(data, wt = n))[[var_main]],
+      #                   y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
+      #                   label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
       ggplot2::scale_fill_manual(
         values = COLOR_SET[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +

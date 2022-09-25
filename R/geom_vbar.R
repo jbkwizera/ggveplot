@@ -5,6 +5,7 @@
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
 #' @param title Title of the bar chart
+#' @param dec_places Rounding decimal places
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param caption Caption to go below the x-axis
@@ -16,7 +17,7 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_vbar(df, "x")
-geom_vbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_vbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -30,7 +31,7 @@ geom_vbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, xl
     data <- data %>%
       dplyr::mutate(n = 100*n/sum(n))
   }
-  data$n <- round(data$n)
+  data$n <- round(data$n, dec_places)
 
   (data %>%
       ggplot2::ggplot(ggplot2::aes(.data[[target]], n)) +

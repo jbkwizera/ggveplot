@@ -30,10 +30,10 @@ geom_vbar_dodge <- function(data, var_main, var_fill, wt = NULL, title = NULL, x
 
   (data %>%
       ggplot2::ggplot(
-        aes(.data[[var_main]], percent, fill = .data[[var_fill]], group = .data[[var_fill]])) +
+        ggplot2::aes(.data[[var_main]], percent, fill = .data[[var_fill]], group = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "dodge") +
       ggplot2::geom_text(
-        aes(label = paste0(round(percent), "%")),
+        ggplot2::aes(label = paste0(round(percent), "%")),
         position = ggplot2::position_dodge(0.9), vjust = -0.5, size = 3) +
       ggplot2::scale_fill_manual(
         values = COLOR_SET[[length(unique(data[[var_fill]]))]],
