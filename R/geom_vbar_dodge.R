@@ -5,6 +5,7 @@
 #' @param var_fill The fill variable to go on the y-axis in the bars
 #' @param wt The weights for tallying
 #' @param title The title of the chart
+#' @param dec_places Rounding decimal places
 #' @param xlab The label of the x-axis
 #' @param ylab The label of the y-axis
 #' @param caption Optional caption for information
@@ -16,7 +17,9 @@
 #' library(ggplot2)
 #' geom_vbar_dodge(mpg, "class", "drv")
 #' @include utils-pipe.R utils-gg.R utils-data.R
-geom_vbar_dodge <- function(data, var_main, var_fill, wt = NULL, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_vbar_dodge <- function(
+    data, var_main, var_fill, wt = NULL, title = NULL, dec_places = 2,
+    xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -26,19 +29,21 @@ geom_vbar_dodge <- function(data, var_main, var_fill, wt = NULL, title = NULL, x
   data <- order_factors_by_count(data, var_main, wt = "wt") %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%
     dplyr::summarize(n = sum(.data$wt), .groups = "drop_last") %>%
-    dplyr::mutate(percent = round(100*n/sum(n)))
+    dplyr::mutate(percent = round(100*n/sum(n), dec_places))
 
   (data %>%
-      ggplot2::ggplot(
-        ggplot2::aes(.data[[var_main]], percent, fill = .data[[var_fill]], group = .data[[var_fill]])) +
+      ggplot2::ggplot(ggplot2::aes(
+        .data[[var_main]], percent, fill = .data[[var_fill]],
+        group = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "dodge") +
       ggplot2::geom_text(
-        ggplot2::aes(label = paste0(round(percent), "%")),
+        ggplot2::aes(label = paste0(round(percent, dec_places), "%")),
         position = ggplot2::position_dodge(0.9), vjust = -0.5, size = 3) +
       ggplot2::scale_fill_manual(
         values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
+      ggplot2::scale_y_continuous(
+        expand = ggplot2::expansion(mult = c(0, 0.1))) +
       ggplot2::ggtitle(title) +
       ggplot2::xlab(NULL) +
       ggplot2::ylab(NULL) +

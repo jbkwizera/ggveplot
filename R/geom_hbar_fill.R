@@ -6,6 +6,7 @@
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
 #' @param title The title of the chart
+#' @param dec_places Rounding decimal places
 #' @param xlab The label of the x-axis
 #' @param ylab The label of the y-axis
 #' @param caption Optional caption for information
@@ -17,7 +18,9 @@
 #' library(ggplot2)
 #' geom_hbar_fill(mpg, "class", "drv")
 #' @include utils-pipe.R utils-gg.R utils-data.R
-geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_hbar_fill <- function(
+    data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL,
+    dec_places = 2, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -27,24 +30,24 @@ geom_hbar_fill <- function(data, var_main, var_fill, wt = NULL, percent = FALSE,
   data <- order_factors_by_count(data, var_main, wt = "wt") %>%
     dplyr::group_by(.data[[var_main]], .data[[var_fill]]) %>%
     dplyr::summarize(n = sum(.data$wt), .groups = "drop_last") %>%
-    dplyr::mutate(percent = round(100*n/sum(n)))
+    dplyr::mutate(percent = round(100*n/sum(n), dec_places))
 
   (data %>%
       ggplot2::ggplot(
-        ggplot2::aes(stats::reorder(.data[[var_main]], n, function(x) rev(sum(x))),
-            percent, fill = .data[[var_fill]])) +
+        ggplot2::aes(
+          stats::reorder(.data[[var_main]], n, function(x) rev(sum(x))),
+          percent, fill = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "fill", width = 0.6) +
       ggplot2::geom_text(
-        ggplot2::aes(label = paste0(round(percent), "%")),
-        position = ggplot2::position_fill(vjust = 0.5), size = 3, color = "white") +
-      # ggplot2::annotate("text", x = (dplyr::count(data, wt = n))[[var_main]],
-      #                   y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
-      #                   label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
+        ggplot2::aes(label = paste0(round(percent, dec_places), "%")),
+        position = ggplot2::position_fill(
+          vjust = 0.5), size = 3, color = "white") +
       ggplot2::scale_fill_manual(
         values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
       ggplot2::scale_y_continuous(
-        labels = scales::percent, expand = ggplot2::expansion(mult = c(0, 0.1))) +
+        labels = scales::percent, expand = ggplot2::expansion(
+          mult = c(0, 0.1))) +
       ggplot2::coord_flip() +
       ggplot2::ggtitle(title) +
       ggplot2::xlab(NULL) +

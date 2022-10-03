@@ -18,7 +18,9 @@
 #' @examples
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
-geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2, labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
+geom_hbar <- function(
+    data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2,
+    labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -35,12 +37,13 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, de
   data$n <- round(data$n, dec_places)
 
   labels_annotation <- ggplot2::annotate(
-    "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))), label = data[[target]],
-    size = 3, hjust = "left", color = "white")
+    "text", x = data[[target]], y = c(rep(min(data$n)/20, nrow(data))),
+    label = data[[target]], size = 3, hjust = "left", color = "white")
 
   gg_layer <- data %>%
     ggplot2::ggplot(ggplot2::aes(stats::reorder(.data[[target]], n, rev), n)) +
-    ggplot2::geom_bar(stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
+    ggplot2::geom_bar(
+      stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
     ggplot2::geom_text(
       ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
       hjust = -0.125, size = 3) +
@@ -56,6 +59,7 @@ geom_hbar <- function(data, target, wt = NULL, percent = FALSE, title = NULL, de
   if (!labels_in) {
     return (gg_layer)
   } else {
-    return (gg_layer + labels_annotation + ggplot2::theme(axis.text.y = ggplot2::element_blank()))
+    return (gg_layer + labels_annotation + ggplot2::theme(
+      axis.text.y = ggplot2::element_blank()))
   }
 }

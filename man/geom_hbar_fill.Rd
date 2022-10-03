@@ -11,6 +11,7 @@ geom_hbar_fill(
   wt = NULL,
   percent = FALSE,
   title = NULL,
+  dec_places = 2,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -28,6 +29,8 @@ geom_hbar_fill(
 \item{percent}{Plot the percentages}
 
 \item{title}{The title of the chart}
+
+\item{dec_places}{Rounding decimal places}
 
 \item{xlab}{The label of the x-axis}
 

@@ -10,6 +10,7 @@ geom_vbar_dodge(
   var_fill,
   wt = NULL,
   title = NULL,
+  dec_places = 2,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -25,6 +26,8 @@ geom_vbar_dodge(
 \item{wt}{The weights for tallying}
 
 \item{title}{The title of the chart}
+
+\item{dec_places}{Rounding decimal places}
 
 \item{xlab}{The label of the x-axis}
 
