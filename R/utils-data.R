@@ -30,3 +30,18 @@ order_factors_by_count <- function(data, target, wt = NULL) {
       dplyr::mutate(
         "{target}" := factor(.data[[target]], ordered = TRUE, levels = data_[[target]])))
 }
+
+#' Break Text Into Lines by Width
+#'
+#' @param data Data
+#' @param target Variable of character type to wrap
+#' @param width Line width
+#' @keywords internal
+#' @return Data with modified target
+#' @noRd
+wrap_label_column <- function(data, target, width = 0.9 * getOption("width")) {
+  (data %>%
+     dplyr::mutate("{target}" := sapply(
+       data[[target]], function(x) {
+         paste(strwrap(x, width), collapse = "\n") })))
+}

@@ -9,9 +9,10 @@ geom_hbar(
   target,
   wt = NULL,
   percent = FALSE,
-  title = NULL,
   dec_places = 2,
-  labels_in = TRUE,
+  labels_in = FALSE,
+  labels_width = 0.9 * getOption("width"),
+  title = NULL,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -26,11 +27,13 @@ geom_hbar(
 
 \item{percent}{Plot the percentages}
 
-\item{title}{Title of the bar chart}
-
 \item{dec_places}{Rounding decimal places}
 
 \item{labels_in}{Put labels inside or outside the bars}
+
+\item{labels_width}{The number of characters per line of label text}
+
+\item{title}{Title of the bar chart}
 
 \item{xlab}{x-axis label}
 

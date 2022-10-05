@@ -4,9 +4,10 @@
 #' @param target The column to put on the bar chart
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
-#' @param title Title of the bar chart
 #' @param dec_places Rounding decimal places
 #' @param labels_in Put labels inside or outside the bars
+#' @param labels_width The number of characters per line of label text
+#' @param title Title of the bar chart
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param caption Caption to go below the x-axis
@@ -19,8 +20,9 @@
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
 geom_hbar <- function(
-    data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2,
-    labels_in = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
+    data, target, wt = NULL, percent = FALSE, dec_places = 2, labels_in = FALSE,
+    labels_width = 0.9 * getOption("width"), title = NULL, xlab = NULL,
+    ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -41,6 +43,7 @@ geom_hbar <- function(
     label = data[[target]], size = 3, hjust = "left", color = "white")
 
   gg_layer <- data %>%
+    wrap_label_column(target, width = labels_width) %>%
     ggplot2::ggplot(ggplot2::aes(stats::reorder(.data[[target]], n, rev), n)) +
     ggplot2::geom_bar(
       stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
