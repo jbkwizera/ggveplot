@@ -9,6 +9,7 @@ geom_hbar(
   target,
   wt = NULL,
   percent = FALSE,
+  percent_format = FALSE,
   dec_places = 2,
   labels_in = FALSE,
   labels_width = 0.9 * getOption("width"),
@@ -26,6 +27,8 @@ geom_hbar(
 \item{wt}{The weights for tallying}
 
 \item{percent}{Plot the percentages}
+
+\item{percent_format}{Format label as percentage}
 
 \item{dec_places}{Rounding decimal places}
 

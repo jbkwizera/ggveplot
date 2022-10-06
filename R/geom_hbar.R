@@ -4,6 +4,7 @@
 #' @param target The column to put on the bar chart
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
+#' @param percent_format Format label as percentage
 #' @param dec_places Rounding decimal places
 #' @param labels_in Put labels inside or outside the bars
 #' @param labels_width The number of characters per line of label text
@@ -20,8 +21,9 @@
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_hbar(df, "x")
 geom_hbar <- function(
-    data, target, wt = NULL, percent = FALSE, dec_places = 2, labels_in = FALSE,
-    labels_width = 0.9 * getOption("width"), title = NULL, xlab = NULL,
+    data, target, wt = NULL, percent = FALSE, percent_format = FALSE,
+    dec_places = 2, labels_in = FALSE, labels_width = 0.9 * getOption("width"),
+    title = NULL, xlab = NULL,
     ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
@@ -47,8 +49,9 @@ geom_hbar <- function(
     ggplot2::ggplot(ggplot2::aes(stats::reorder(.data[[target]], n, rev), n)) +
     ggplot2::geom_bar(
       stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
-    ggplot2::geom_text(
-      ggplot2::aes(label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
+    ggplot2::geom_text(ggplot2::aes(
+      label = ifelse(rep(any(c(percent, percent_format)), nrow(data)),
+                     paste0(n, "%"), n)),
       hjust = -0.125, size = 3) +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0, 0.1))) +
     ggplot2::coord_flip() +
