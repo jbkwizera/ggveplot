@@ -40,10 +40,10 @@ geom_vbar_fill <- function(
         ggplot2::aes(label = paste0(round(percent, dec_places), "%")),
         position = ggplot2::position_fill(
           vjust = 0.5), size = 3, color = "white") +
-      ggplot2::annotate(
-        "text", x = (dplyr::count(data, wt = n))[[var_main]],
-        y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
-        label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
+      # ggplot2::annotate(
+      #   "text", x = (dplyr::count(data, wt = n))[[var_main]],
+      #   y = c(rep(1.025, nrow(dplyr::count(data, .data[[var_main]])))),
+      #   label = (dplyr::count(data, .data[[var_main]], wt = n))$n, size = 3) +
       ggplot2::scale_fill_manual(
         values = env_gg$color_set[[length(unique(data[[var_fill]]))]],
         aesthetics = c("color", "fill")) +
