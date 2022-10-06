@@ -9,6 +9,7 @@ geom_vbar(
   target,
   wt = NULL,
   percent = FALSE,
+  percent_format = FALSE,
   title = NULL,
   dec_places = 2,
   xlab = NULL,
@@ -24,6 +25,8 @@ geom_vbar(
 \item{wt}{The weights for tallying}
 
 \item{percent}{Plot the percentages}
+
+\item{percent_format}{Format label as percentage}
 
 \item{title}{Title of the bar chart}
 

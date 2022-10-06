@@ -4,6 +4,7 @@
 #' @param target The column to put on the bar chart
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
+#' @param percent_format Format label as percentage
 #' @param title Title of the bar chart
 #' @param dec_places Rounding decimal places
 #' @param xlab x-axis label
@@ -18,8 +19,8 @@
 #' df <- data.frame(x = sample(1:10, 20, replace = TRUE))
 #' geom_vbar(df, "x")
 geom_vbar <- function(
-    data, target, wt = NULL, percent = FALSE, title = NULL, dec_places = 2,
-    xlab = NULL, ylab = NULL, caption = NULL) {
+    data, target, wt = NULL, percent = FALSE, percent_format = FALSE,
+    title = NULL, dec_places = 2, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -40,7 +41,8 @@ geom_vbar <- function(
       ggplot2::geom_bar(
         stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
       ggplot2::geom_text(ggplot2::aes(
-        label = ifelse(rep(percent, nrow(data)), paste0(n, "%"), n)),
+        label = ifelse(rep(any(c(percent, percent_format)), nrow(data)),
+                       paste0(n, "%"), n)),
         size = 3, vjust = -0.5) +
       ggplot2::scale_y_continuous(
         expand = ggplot2::expansion(mult = c(0, 0.1))) +
