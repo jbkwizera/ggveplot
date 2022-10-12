@@ -6,14 +6,16 @@ green     <- "#8CCC98"
 darkgray  <- "#7F7F7F"
 darkgreen <- "#49711E"
 
+ve_palette <- list(
+  c("#097ABC"),
+  c("#097ABC", "#9DC3E5"),
+  c("#097ABC", "#9DC3E5", "#1B2F55"),
+  c("#097ABC", "#8CCC98", "#9DC3E5", "#1B2F55"),
+  c("#097ABC", "#9DC3E5", "#8CCC98", "#49711E", "#1B2F55"))
+
 env_gg <- new.env(parent = emptyenv())
 assign("a4w_in", 6.5, env_gg)
-assign("color_set",
-       list(c("#097ABC"),
-            c("#097ABC", "#9DC3E5"),
-            c("#097ABC", "#9DC3E5", "#1B2F55"),
-            c("#097ABC", "#8CCC98", "#9DC3E5", "#1B2F55"),
-            c("#097ABC", "#9DC3E5", "#8CCC98", "#49711E", "#1B2F55")), env_gg)
+assign("color_set", ve_palette, env_gg)
 
 base_vetheme <- ggplot2::theme(
   plot.title = ggplot2::element_text(hjust = 0.5),
@@ -36,7 +38,7 @@ base_vetheme <- ggplot2::theme(
 #' @examples
 #' palette <- list(c("red"), c("red", "green"), c("red", "green", "blue"))
 #' ggveplot::set_palette(palette)
-set_palette <- function(palette) {
+set_palette <- function(palette = ve_palette) {
   stopifnot(all(sapply(palette, function(vec) length(unique(vec)))))
   assign("color_set", palette, env_gg)
   invisible(env_gg$color_set)

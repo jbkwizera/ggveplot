@@ -4,7 +4,7 @@
 \alias{set_palette}
 \title{Set a custom palette}
 \usage{
-set_palette(palette)
+set_palette(palette = ve_palette)
 }
 \arguments{
 \item{palette}{A list of vectors of color sets to be used}
