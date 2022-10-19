@@ -13,6 +13,7 @@ geom_hbar(
   dec_places = 1,
   labels_in = FALSE,
   labels_width = 0.9 * getOption("width"),
+  monochrome = TRUE,
   title = NULL,
   xlab = NULL,
   ylab = NULL,
@@ -35,6 +36,8 @@ geom_hbar(
 \item{labels_in}{Put labels inside or outside the bars}
 
 \item{labels_width}{The number of characters per line of label text}
+
+\item{monochrome}{Use one color}
 
 \item{title}{Title of the bar chart}
 

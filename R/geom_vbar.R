@@ -8,6 +8,7 @@
 #' @param title Title of the bar chart
 #' @param dec_places Rounding decimal places
 #' @param labels_width The number of characters per line of label text
+#' @param monochrome Use one color
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param caption Caption to go below the x-axis
@@ -22,7 +23,7 @@
 geom_vbar <- function(
     data, target, wt = NULL, percent = FALSE, percent_format = FALSE,
     title = NULL, dec_places = 1, labels_width = 0.9 * getOption("width"),
-    xlab = NULL, ylab = NULL, caption = NULL) {
+    monochrome = TRUE, xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -45,7 +46,8 @@ geom_vbar <- function(
       ggplot2::geom_bar(
         stat = "identity", width = 0.6, show.legend = FALSE) +
       ggplot2::scale_fill_manual(
-        values = env_gg$color_set[[nrow(data)]],
+        values = env_gg$color_set[[ifelse(monochrome, 1, nrow(data))]] %>%
+          rep(ifelse(monochrome, nrow(data), 1)),
         aesthetics = c("color", "fill")) +
       ggplot2::geom_text(ggplot2::aes(
         label = ifelse(rep(any(c(percent, percent_format)), nrow(data)),

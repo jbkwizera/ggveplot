@@ -13,6 +13,7 @@ geom_vbar(
   title = NULL,
   dec_places = 1,
   labels_width = 0.9 * getOption("width"),
+  monochrome = TRUE,
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -34,6 +35,8 @@ geom_vbar(
 \item{dec_places}{Rounding decimal places}
 
 \item{labels_width}{The number of characters per line of label text}
+
+\item{monochrome}{Use one color}
 
 \item{xlab}{x-axis label}
 

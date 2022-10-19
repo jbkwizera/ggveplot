@@ -8,6 +8,7 @@
 #' @param dec_places Rounding decimal places
 #' @param labels_in Put labels inside or outside the bars
 #' @param labels_width The number of characters per line of label text
+#' @param monochrome Use one color
 #' @param title Title of the bar chart
 #' @param xlab x-axis label
 #' @param ylab y-axis label
@@ -23,8 +24,8 @@
 geom_hbar <- function(
     data, target, wt = NULL, percent = FALSE, percent_format = FALSE,
     dec_places = 1, labels_in = FALSE, labels_width = 0.9 * getOption("width"),
-    title = NULL, xlab = NULL,
-    ylab = NULL, caption = NULL) {
+    monochrome = TRUE, title = NULL, xlab = NULL, ylab = NULL,
+    caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -46,9 +47,14 @@ geom_hbar <- function(
 
   gg_layer <- data %>%
     wrap_label_column(target, width = labels_width) %>%
-    ggplot2::ggplot(ggplot2::aes(stats::reorder(.data[[target]], n, rev), n)) +
+    ggplot2::ggplot(ggplot2::aes(stats::reorder(
+      .data[[target]], n, rev), n, fill = .data[[target]])) +
     ggplot2::geom_bar(
-      stat = "identity", fill = env_gg$color_set[[1]], width = 0.6) +
+      stat = "identity", width = 0.6, show.legend = FALSE) +
+    ggplot2::scale_fill_manual(
+      values = env_gg$color_set[[ifelse(monochrome, 1, nrow(data))]] %>%
+        rep(ifelse(monochrome, nrow(data), 1)),
+      aesthetics = c("color", "fill")) +
     ggplot2::geom_text(ggplot2::aes(
       label = ifelse(rep(any(c(percent, percent_format)), nrow(data)),
                      paste0(n, "%"), n)),
