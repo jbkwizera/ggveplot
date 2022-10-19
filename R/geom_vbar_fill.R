@@ -6,6 +6,7 @@
 #' @param wt The weights for tallying
 #' @param percent Plot the percentages
 #' @param dec_places Rounding decimal places
+#' @param labels_width The number of characters per line of label text
 #' @param title The title of the chart
 #' @param xlab The label of the x-axis
 #' @param ylab The label of the y-axis
@@ -20,7 +21,8 @@
 #' @include utils-pipe.R utils-gg.R utils-data.R
 geom_vbar_fill <- function(
     data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL,
-    dec_places = 2, xlab = NULL, ylab = NULL, caption = NULL) {
+    dec_places = 1, labels_width = 0.9 * getOption("width"),
+    xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -33,6 +35,7 @@ geom_vbar_fill <- function(
     dplyr::mutate(percent = round(100*n/sum(n), dec_places))
 
   (data %>%
+      wrap_label_column(var_main, width = labels_width) %>%
       ggplot2::ggplot(
         ggplot2::aes(.data[[var_main]], percent, fill = .data[[var_fill]])) +
       ggplot2::geom_bar(stat = "identity", position = "fill", width = 0.6) +

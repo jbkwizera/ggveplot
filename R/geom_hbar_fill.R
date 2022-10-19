@@ -7,6 +7,7 @@
 #' @param percent Plot the percentages
 #' @param title The title of the chart
 #' @param dec_places Rounding decimal places
+#' @param labels_width The number of characters per line of label text
 #' @param xlab The label of the x-axis
 #' @param ylab The label of the y-axis
 #' @param caption Optional caption for information
@@ -20,7 +21,8 @@
 #' @include utils-pipe.R utils-gg.R utils-data.R
 geom_hbar_fill <- function(
     data, var_main, var_fill, wt = NULL, percent = FALSE, title = NULL,
-    dec_places = 2, xlab = NULL, ylab = NULL, caption = NULL) {
+    dec_places = 1, labels_width = 0.9 * getOption("width"),
+    xlab = NULL, ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
     data$wt <- 1
   } else {
@@ -33,6 +35,7 @@ geom_hbar_fill <- function(
     dplyr::mutate(percent = round(100*n/sum(n), dec_places))
 
   (data %>%
+      wrap_label_column(var_main, width = labels_width) %>%
       ggplot2::ggplot(
         ggplot2::aes(
           stats::reorder(.data[[var_main]], n, function(x) rev(sum(x))),

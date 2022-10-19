@@ -11,7 +11,8 @@ geom_hbar_fill(
   wt = NULL,
   percent = FALSE,
   title = NULL,
-  dec_places = 2,
+  dec_places = 1,
+  labels_width = 0.9 * getOption("width"),
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -31,6 +32,8 @@ geom_hbar_fill(
 \item{title}{The title of the chart}
 
 \item{dec_places}{Rounding decimal places}
+
+\item{labels_width}{The number of characters per line of label text}
 
 \item{xlab}{The label of the x-axis}
 

@@ -10,7 +10,7 @@ geom_hbar(
   wt = NULL,
   percent = FALSE,
   percent_format = FALSE,
-  dec_places = 2,
+  dec_places = 1,
   labels_in = FALSE,
   labels_width = 0.9 * getOption("width"),
   title = NULL,

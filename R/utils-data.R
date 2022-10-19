@@ -41,6 +41,7 @@ order_factors_by_count <- function(data, target, wt = NULL) {
 #' @noRd
 wrap_label_column <- function(data, target, width = 0.9 * getOption("width")) {
   (data %>%
+     dplyr::ungroup() %>%
      dplyr::mutate("{target}" := sapply(
        data[[target]], function(x) {
          paste(strwrap(x, width), collapse = "\n") })))

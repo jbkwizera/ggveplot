@@ -11,7 +11,8 @@ geom_vbar(
   percent = FALSE,
   percent_format = FALSE,
   title = NULL,
-  dec_places = 2,
+  dec_places = 1,
+  labels_width = 0.9 * getOption("width"),
   xlab = NULL,
   ylab = NULL,
   caption = NULL
@@ -32,6 +33,8 @@ geom_vbar(
 
 \item{dec_places}{Rounding decimal places}
 
+\item{labels_width}{The number of characters per line of label text}
+
 \item{xlab}{x-axis label}
 
 \item{ylab}{y-axis label}
@@ -45,6 +48,6 @@ The bar chart object
 Draw a vertical bar chart
 }
 \examples{
-df <- data.frame(x = sample(1:10, 20, replace = TRUE))
+df <- data.frame(x = sample(1:4, 20, replace = TRUE))
 geom_vbar(df, "x")
 }

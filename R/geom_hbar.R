@@ -22,7 +22,7 @@
 #' geom_hbar(df, "x")
 geom_hbar <- function(
     data, target, wt = NULL, percent = FALSE, percent_format = FALSE,
-    dec_places = 2, labels_in = FALSE, labels_width = 0.9 * getOption("width"),
+    dec_places = 1, labels_in = FALSE, labels_width = 0.9 * getOption("width"),
     title = NULL, xlab = NULL,
     ylab = NULL, caption = NULL) {
   if (is.null(wt)) {
